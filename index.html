@@ -1,0 +1,59 @@
+<!DOCTYPE html> 
+<html lang="en-us">
+<head>
+<meta charset="UTF-8">
+<title>SWapi Genny</title>
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+<style>
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align:center">SwApi Genny</h1>
+        <p style="text-align:center">click to generate image of starships from star wars</p>
+        <button id="getSwapButton">Click Here</button>
+        <div>
+            <p id="nameOfShip"></p>
+            <p id="modelOfShip"></p>
+            <p id="starShipClass"></p>
+            <p id="jsonString"></p>
+        </div>   
+    </div>
+<script>
+$(function(){
+
+    'use strict'
+    
+    const BASEURL = "https://swapi.co/api";
+    const STARSHIPPATH = "/starships/";
+
+    function createRandomNumber(){
+        const starShipExist = [2, 3, 5, 9, 10, 11, 12, 13, 15, 17, 21, 22, 23, 27, 28, 29, 31, 32, 39, 40, 41, 43, 47, 48, 49, 52, 58, 59, 61, 63, 64, 65, 66, 68, 74, 75, 77];
+        let extractRandomIndex = starShipExist[Math.floor(Math.random()*starShipExist.length)];
+
+        return extractRandomIndex;
+    }
+    
+    function getSWapi(){
+        $('#getSwapButton').click(function(){
+            $.ajax({
+                type:'GET',
+                contentType: "application/json",
+                url: BASEURL + STARSHIPPATH + createRandomNumber(),
+                success: function(result){
+                    $("#nameOfShip").html(JSON.stringify(result.name));
+                    $("#modelOfShip").html(JSON.stringify(result.model));
+                    $("#starShipClass").html(JSON.stringify(result.starship_class));
+                    $("#jsonString").html(JSON.stringify(result));
+                }
+            });
+        });
+    }
+
+    getSWapi();
+});
+</script>
+
+
+</body>
+</html>
